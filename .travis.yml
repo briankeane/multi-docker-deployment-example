@@ -1,0 +1,24 @@
+sudo: required
+service:
+  - docker
+
+before_install:
+  - docker build -t briandkeane/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run briandkeane/react-test npm test -- --coverage  # " -- -- coverage" is because regular test doesn't ever exit
+
+after_success:
+  - docker build -t briandkeane/multi-client-example ./client
+  - docker build -t briandkeane/multi-client-nginx ./nginx
+  - docker build -t briandkeane/multi-client-server ./server
+  - docker build -t briandkeane/multi-client-worker ./worker
+
+  # log in to the docker cli
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+
+  # push those builds to docker hub
+  - docker push briandkeane/multi-client-example
+  - docker push briandkeane/multi-client-nginx
+  - docker push briandkeane/multi-client-server
+  - docker push briandkeane/multi-client-worker
