@@ -10,7 +10,7 @@
     },
     {
       "name": "server",
-      ""
+      "memory": 128,
       "image": "briandkeane/multi-client-server",
       "hostname": "api",
       "essential": false
