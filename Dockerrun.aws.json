@@ -3,18 +3,21 @@
   "containerDefinitions": [
     {
       "name": "client",
+      "memory": 128,
       "image": "briandkeane/multi-client-example",
       "hostname": "client",
       "essential": false
     },
     {
       "name": "server",
+      ""
       "image": "briandkeane/multi-client-server",
       "hostname": "api",
       "essential": false
     },
     {
       "name": "worker",
+      "memory": 128,
       "image": "briandkeane/multi-client-worker",
       "hostname": "worker",
       "essential": false
@@ -22,6 +25,7 @@
     {
 
       "name": "nginx",
+      "memory": 128,
       "image": "briandkeane/multi-client-nginx",
       "hostname": "nginx",
       "essential": true,
@@ -31,7 +35,8 @@
           "containerPort": 80
         }
       ],
-      "links": ["client", "server"]
+      "links": ["client", "server"],
+      "memory": 128
     }
   ]
 }
